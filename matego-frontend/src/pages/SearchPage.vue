@@ -22,12 +22,17 @@
     v-model:main-active-index="activeIndex"
     :items="tagList"
   />
+  <div style="padding: 16px">
+    <van-button block type="primary" @click="doSearchResult">搜索</van-button>
+  </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import { Toast } from "vant";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const searchText = ref("");
 
 const originTagList = [
@@ -47,6 +52,16 @@ const originTagList = [
       { text: "大四", id: "大四" },
     ],
   },
+  {
+    text: "编程语言",
+    children: [
+      { text: "Java", id: "Java" },
+      { text: "C++", id: "C++" },
+      { text: "Python", id: "Python" },
+      { text: "GO", id: "GO" },
+      { text: "JavaScript", id: "JavaScript" },
+    ],
+  },
 ];
 
 // 标签列表
@@ -56,7 +71,7 @@ let tagList = ref(originTagList);
 const onSearch = (val) => {
   tagList.value = originTagList.map((parentTag) => {
     const tempChildren = [...parentTag.children];
-    const tempParentTag = {...parentTag};
+    const tempParentTag = { ...parentTag };
     tempParentTag.children = tempChildren.filter((item) =>
       item.text.includes(searchText.value)
     );
@@ -72,10 +87,20 @@ const onCancel = () => {
 const activeIds = ref([]);
 const activeIndex = ref(0);
 
-//移除标签
+// 移除标签
 const doClose = (tag) => {
   activeIds.value = activeIds.value.filter((item) => {
     return item !== tag;
+  });
+};
+
+// 执行搜索
+const doSearchResult = () => {
+  router.push({
+    path: "/user/list",
+    query: {
+      tags: activeIds.value,
+    },
   });
 };
 </script>

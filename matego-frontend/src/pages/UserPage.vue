@@ -1,41 +1,53 @@
 <template>
-  <van-cell title="昵称" is-link to="/user/edit" :value="user.username" />
-  <van-cell title="账号" is-link to="/user/edit" :value="user.userAccount" />
-  <van-cell title="头像" is-link to="/user/edit">
-    <img style="height: 48px" :src="user.avatarUrl" />
-  </van-cell>
-  <van-cell
-    title="性别"
-    is-link
-    to="/user/edit"
-    :value="user.gender"
-    @click="toEdit('gender', '性别', user.gender)"
-  />
-  <van-cell
-    title="电话"
-    is-link
-    to="/user/edit"
-    :value="user.phone"
-    @click="toEdit('phone', '电话', user.phone)"
-  />
-  <van-cell title="邮箱" is-link to="/user/edit" :value="user.email" />
-  <van-cell title="注册时间" :value="user.createTime.toISOString()" />
+  <template v-if="user">
+    <van-cell
+      title="昵称"
+      is-link
+      to="/user/edit"
+      :value="user.username"
+      @click="toEdit('username', '昵称', user.username)"
+    />
+    <van-cell title="账户" :value="user.userAccount" />
+    <van-cell
+      title="头像"
+      is-link
+      to="/user/edit"
+      :value="user.avatarUrl"
+      @click="toEdit('avatarUrl', '头像', user.avatarUrl)"
+    >
+      <img style="height: 48px" :src="user.avatarUrl" />
+    </van-cell>
+    <van-cell
+      title="性别"
+      is-link
+      to="/user/edit"
+      :value="user.gender"
+      @click="toEdit('gender', '性别', user.gender)"
+    />
+    <van-cell
+      title="电话"
+      is-link
+      to="/user/edit"
+      :value="user.phone"
+      @click="toEdit('phone', '电话', user.phone)"
+    />
+    <van-cell
+      title="邮箱"
+      is-link
+      to="/user/edit"
+      :value="user.email"
+      @click="toEdit('email', '邮箱', user.email)"
+    />
+    <van-cell title="注册时间" :value="user.createTime" />
+  </template>
 </template>
 
 <script setup lang="ts">
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
+import { getCurrentUser } from "../services/user";
 
-const user = {
-  id: 1,
-  username: "罗围",
-  userAccount: "0679",
-  avatarUrl:
-    "https://img1.baidu.com/it/u=2428624434,1821504445&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
-  gender: "女",
-  phone: "13012410679",
-  email: "781524813@qq.com",
-  createTime: new Date(),
-};
+const user = ref();
 
 const router = useRouter();
 
@@ -49,6 +61,10 @@ const toEdit = (editKey: string, editName: string, currentValue: string) => {
     },
   });
 };
+
+onMounted(async () => {
+  user.value = await getCurrentUser();
+});
 </script>
 
 <style scoped>

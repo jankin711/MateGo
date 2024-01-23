@@ -1,24 +1,5 @@
 <template>
-  <van-card
-    v-for="user in userList"
-    :desc="user.profile"
-    :title="`${user.username} (${user.userAccount})`"
-    :thumb="user.avatarUrl"
-  >
-    <template #tags>
-      <van-tag
-        plain
-        type="danger"
-        v-for="tag in user.tags"
-        style="margin-right: 8px; margin-top: 8px"
-      >
-        {{ tag }}
-      </van-tag>
-    </template>
-    <template #footer>
-      <van-button size="mini">联系我</van-button>
-    </template>
-  </van-card>
+  <user-card-list :user-list="userList" />
   <van-empty
     v-if="!userList || userList.length < 1"
     description="搜索结果为空"
@@ -31,6 +12,7 @@ import { useRoute } from "vue-router";
 import { Toast } from "vant";
 import myAxios from "../plugins/myAxios";
 import qs from "qs";
+import UserCardList from "../components/UserCardList.vue"
 
 const route = useRoute();
 const { tags } = route.query;
@@ -42,7 +24,7 @@ onMounted(async () => {
   // 为给定 ID 的 user 创建请求
   const userListData = await myAxios
     .get("/user/search/tags", {
-      withCredentials: false,
+      // withCredentials: false,
       params: {
         tagNameList: tags,
       },
@@ -53,7 +35,8 @@ onMounted(async () => {
     })
     .then(function (response) {
       console.log("/user/search/tags succeed", response);
-      return response.data?.data; //返回数据  ?.可选链操作符，避免数据为null或undefined时报错
+      Toast.success("请求成功");
+      return response?.data; //返回数据  ?.可选链操作符，避免数据为null或undefined时报错
     })
     .catch(function (error) {
       console.log("/user/search/tags error", error);

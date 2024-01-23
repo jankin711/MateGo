@@ -2,6 +2,7 @@ package com.jankin.usercenter.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jankin.usercenter.common.BaseResponse;
 import com.jankin.usercenter.common.ErrorCode;
 import com.jankin.usercenter.common.ResultUtils;
@@ -15,11 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.jankin.usercenter.constant.UserConstant.ADMIN_ROLE;
 import static com.jankin.usercenter.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
@@ -29,7 +28,7 @@ import static com.jankin.usercenter.constant.UserConstant.USER_LOGIN_STATE;
  */
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:8000"})
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:8000"}, allowCredentials = "true")
 public class UserController {
 
     @Resource
@@ -114,13 +113,13 @@ public class UserController {
         return ResultUtils.success(userList);
     }
 
-    /**
-     * 更新用户信息
-     *
-     * @param user
-     * @param request
-     * @return
-     */
+    @GetMapping("/recommend")
+    public BaseResponse<Page<User>> recommendUsers(long pageSize, long pageNum, HttpServletRequest request){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        Page<User> userList = userService.page(new Page<>(pageNum, pageSize), queryWrapper);
+        return ResultUtils.success(userList);
+    }
+
     @PostMapping("/update")
     public BaseResponse<Integer> updateUser(@RequestBody User user, HttpServletRequest request) {
         if (user == null) {

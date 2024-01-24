@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * 导入星球用户到数据库
+ * 导入用户到数据库
  */
 public class ImportUser {
 
@@ -26,8 +26,7 @@ public class ImportUser {
 
         for (Map.Entry<String, List<TableUserInfo>> stringListEntry : listMap.entrySet()) {
             if (stringListEntry.getValue().size() > 1) {
-                System.out.println("username = " + stringListEntry.getKey());
-                System.out.println("1");
+                System.out.println("重复昵称：" + stringListEntry.getKey());
             }
         }
         System.out.println("不重复昵称数 = " + listMap.keySet().size());

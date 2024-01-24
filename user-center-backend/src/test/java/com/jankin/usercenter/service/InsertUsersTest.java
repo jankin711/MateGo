@@ -1,7 +1,7 @@
 package com.jankin.usercenter.service;
 
 import com.jankin.usercenter.model.domain.User;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.StopWatch;
 
@@ -19,13 +19,13 @@ public class InsertUsersTest {
     private ExecutorService executorService = new ThreadPoolExecutor(25, 1000, 10000, TimeUnit.MINUTES, new ArrayBlockingQueue<>(10000));
 
     /**
-     * 批量插入用户
+     * 批量插入用户  耗时：15924 ms
      */
     @Test
     public void doInsertUser() {
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
-        final int INSERT_NUM = 1000;
+        final int INSERT_NUM = 100000;
         List<User> userList = new ArrayList<>();
         for (int i = 0; i < INSERT_NUM; i++) {
             User user = new User();
@@ -42,14 +42,14 @@ public class InsertUsersTest {
             user.setTags("[]");
             userList.add(user);
         }
-        userService.saveBatch(userList, 100);
+        userService.saveBatch(userList, 5000);
         stopWatch.stop();
         System.out.println(stopWatch.getLastTaskTimeMillis());
 
     }
 
     /**
-     * 并发批量插入用户
+     * 并发批量插入用户  耗时：5030 ms
      */
     @Test
     public void doConcurrencyInsertUser() {

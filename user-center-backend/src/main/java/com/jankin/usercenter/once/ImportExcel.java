@@ -12,7 +12,7 @@ public class ImportExcel {
      * 读取数据
      */
     public static void main(String[] args) {
-        String fileName = "D:\\Code\\user-center\\user-center-backend\\src\\main\\resources\\testExcel.xlsx";
+        String fileName = "D:\\Code\\user-center\\user-center-backend\\src\\main\\resources\\userExcel.xlsx";
         // readByListener(fileName);
         synchronousRead(fileName);
     }

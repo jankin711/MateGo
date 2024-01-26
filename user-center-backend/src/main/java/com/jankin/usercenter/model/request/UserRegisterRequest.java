@@ -1,4 +1,4 @@
-package com.jankin.usercenter.model.domain.request;
+package com.jankin.usercenter.model.request;
 
 import lombok.Data;
 
@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Data
 public class UserRegisterRequest implements Serializable {
 
-    private static final long serialVersionUID = 6229526856199796527L;
+    private static final long serialVersionUID = 6388089001757587501L;
 
     private String userAccount;
 

@@ -5,36 +5,22 @@
       placeholder="搜索队伍"
       @search="onSearch"
     />
-    <van-button type="primary" @click="doJoinTeam">创建队伍</van-button>
     <team-card-list :teamList="teamList" />
     <van-empty v-if="teamList?.length < 1" description="数据为空" />
   </div>
 </template>
-
-<script setup>
-import { Toast } from "vant";
-import { onMounted, ref } from "vue";
+  
+<script setup lang="ts">
 import { useRouter } from "vue-router";
-import myAxios from "../plugins/myAxios";
 import TeamCardList from "../components/TeamCardList.vue";
+import { onMounted, ref } from "vue";
+import myAxios from "../plugins/myAxios";
+import { Toast } from "vant";
 
 const router = useRouter();
-
-const doJoinTeam = () => {
-  router.push({
-    path: "/team/add",
-  });
-};
+const searchText = ref("");
 
 const teamList = ref([]);
-
-onMounted(async () => {
-  listTeam();
-});
-
-const onSearch = (val) => {
-  listTeam(val);
-};
 
 /**
  * 搜索队伍
@@ -42,7 +28,7 @@ const onSearch = (val) => {
  * @returns {Promise<void>}
  */
 const listTeam = async (val = "") => {
-  const res = await myAxios.get("/team/list", {
+  const res = await myAxios.get("/team/list/my/join", {
     params: {
       searchText: val,
       pageNum: 1,
@@ -54,7 +40,18 @@ const listTeam = async (val = "") => {
     Toast.fail("加载队伍失败，请刷新重试");
   }
 };
-</script>
 
+// 页面加载时只触发一次
+onMounted(() => {
+  listTeam();
+});
+
+const onSearch = (val) => {
+  listTeam(val);
+};
+</script>
+  
 <style scoped>
+#teamPage {
+}
 </style>

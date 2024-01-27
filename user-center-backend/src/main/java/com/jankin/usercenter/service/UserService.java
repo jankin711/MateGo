@@ -91,4 +91,13 @@ public interface UserService extends IService<User> {
      * @return
      */
     int updateUser(User user, User loginUser);
+
+    /**
+     * 匹配用户
+     *
+     * @param num
+     * @param loginUser
+     * @return
+     */
+    List<User> matchUsers(long num, User loginUser);
 }

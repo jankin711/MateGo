@@ -25,13 +25,14 @@
   </van-form>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { useRoute, useRouter } from "vue-router";
+import { ref } from "vue";
 import myAxios from "../plugins/myAxios";
 import { Toast } from "vant";
-import { ref } from "vue";
-import { useRouter } from "vue-router";
 
 const router = useRouter();
+const route = useRoute();
 
 const userAccount = ref("");
 const userPassword = ref("");
@@ -41,9 +42,12 @@ const onSubmit = async () => {
     userAccount: userAccount.value,
     userPassword: userPassword.value,
   });
-  if (res.code === 0 && res.data != null) {
+  console.log(res, "用户登录");
+  if (res.code === 0 && res.data) {
     Toast.success("登录成功");
-    router.replace("/");
+    // 跳转到之前的页面
+    const redirectUrl = (route.query?.redirect as string) ?? "/";
+    window.location.href = redirectUrl;
   } else {
     Toast.fail("登录失败");
   }

@@ -1,7 +1,8 @@
 <template>
-  <user-card-list :user-list="userList" />
+  <user-card-list :user-list="userList" :loading="loading" />
   <van-empty
     v-if="!userList || userList.length < 1"
+    
     description="搜索结果为空"
   />
 </template>
@@ -12,15 +13,16 @@ import { useRoute } from "vue-router";
 import { Toast } from "vant";
 import myAxios from "../plugins/myAxios";
 import qs from "qs";
-import UserCardList from "../components/UserCardList.vue"
+import UserCardList from "../components/UserCardList.vue";
 
 const route = useRoute();
 const { tags } = route.query;
+const loading = ref(true);
 
 const userList = ref([]); //存放用户列表
 
 onMounted(async () => {
-  //异步调用
+  loading.value = true;
   // 为给定 ID 的 user 创建请求
   const userListData = await myAxios
     .get("/user/search/tags", {
@@ -50,6 +52,7 @@ onMounted(async () => {
     });
     userList.value = userListData;
   }
+  loading.value = false;
 });
 </script>
 

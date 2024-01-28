@@ -22,10 +22,10 @@ const routes = [
   { path: "/user/edit", title: "编辑信息", component: UserEditPage },
   { path: "/user/login", title: "登录", component: UserLoginPage },
   { path: "/user/update", title: "更新信息", component: UserUpdatePage },
-  { path: "/user/team/join", title: "加入队伍", component: UserTeamJoinPage },
+  { path: "/user/team/join", title: "我加入的队伍", component: UserTeamJoinPage },
   {
     path: "/user/team/create",
-    title: "创建队伍",
+    title: "我创建的队伍",
     component: UserTeamCreatePage,
   },
 ];

@@ -5,7 +5,7 @@
       placeholder="搜索队伍"
       @search="onSearch"
     />
-    <van-button type="primary" @click="doJoinTeam">创建队伍</van-button>
+    <van-button type="primary" @click="toAddTeam">创建队伍</van-button>
     <team-card-list :teamList="teamList" />
     <van-empty v-if="teamList?.length < 1" description="数据为空" />
   </div>
@@ -21,8 +21,8 @@ import { Toast } from "vant";
 const router = useRouter();
 const searchText = ref("");
 
-// 跳转到加入队伍页
-const doJoinTeam = () => {
+// 跳转到创建队伍页
+const toAddTeam = () => {
   router.push({
     path: "/team/add",
   });

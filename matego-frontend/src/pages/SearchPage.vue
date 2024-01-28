@@ -44,6 +44,15 @@ const originTagList = [
     ],
   },
   {
+    text: "编程语言",
+    children: [
+      { text: "Java", id: "Java" },
+      { text: "C++", id: "C++" },
+      { text: "Python", id: "Python" },
+      { text: "GO", id: "GO" },
+    ],
+  },
+  {
     text: "年级",
     children: [
       { text: "大一", id: "大一" },
@@ -53,13 +62,12 @@ const originTagList = [
     ],
   },
   {
-    text: "编程语言",
+    text: "运动爱好",
     children: [
-      { text: "Java", id: "Java" },
-      { text: "C++", id: "C++" },
-      { text: "Python", id: "Python" },
-      { text: "GO", id: "GO" },
-      { text: "JavaScript", id: "JavaScript" },
+      { text: "篮球", id: "篮球" },
+      { text: "乒乓球", id: "乒乓球" },
+      { text: "足球", id: "足球" },
+      { text: "羽毛球", id: "羽毛球" },
     ],
   },
 ];

@@ -38,7 +38,7 @@ public class PreCacheJob {
         RLock lock = redissonClient.getLock("matego:precachejob:docache:lock");
         try {
             //只有一个线程能获取到锁
-            if (lock.tryLock(0, 30000L, TimeUnit.MILLISECONDS)) {
+            if (lock.tryLock(0, -1, TimeUnit.MILLISECONDS)) {
                 System.out.println("getLock: " + Thread.currentThread().getId());
                 for (Long userId : mainUserList) {
                     QueryWrapper<User> queryWrapper = new QueryWrapper<>();

@@ -1,7 +1,6 @@
 package com.jankin.usercenter.vo;
 
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -40,7 +39,7 @@ public class TeamUserVO implements Serializable {
     private Date expireTime;
 
     /**
-     * 用户id
+     * 用户 id
      */
     private Long userId;
 
